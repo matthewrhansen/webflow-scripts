@@ -1,3 +1,5 @@
+<style>
+
 /* --- General window behavior --- */
 [data-draggable] {
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -98,3 +100,5 @@
   0% { transform: translateY(60px) scale(0.8); opacity: 0.5; }
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
+
+</style>
