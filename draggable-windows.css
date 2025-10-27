@@ -1,0 +1,100 @@
+/* --- General window behavior --- */
+[data-draggable] {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: bottom center;
+}
+
+
+/* Shrink + fade slightly when minimizing */
+[data-draggable].minimizing {
+  transform: scale(0.7) translateY(50px);
+  opacity: 0.5;
+}
+
+/* Pop back slightly when restoring */
+[data-draggable].restoring {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+/* Hidden body when minimized */
+[data-draggable][data-minimized="true"] .win__body {
+  display: none !important;
+}
+
+/* --- Dock container (bottom-right) --- */
+.window-dock {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: auto;
+  height: 80px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 0 20px 10px;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.window-dock > * {
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.window-dock > *:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+/* --- Minimized window style (in dock) --- */
+[data-draggable][data-minimized="true"] {
+  position: relative !important;
+  width: 180px !important;
+  height: 40px !important;
+  overflow: hidden;
+  transform: none !important;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+/* Dock background */
+.window-dock::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.05), transparent);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  z-index: -1;
+}
+
+/* Prevent selection while dragging */
+[data-draggable],
+[data-draggable] * {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+/* --- Animation helpers --- */
+[data-draggable].slide-down {
+  animation: slideDown 0.4s ease forwards;
+}
+[data-draggable].slide-up {
+  animation: slideUp 0.4s ease forwards;
+}
+
+@keyframes slideDown {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(60px) scale(0.8); opacity: 0.5; }
+}
+@keyframes slideUp {
+  0% { transform: translateY(60px) scale(0.8); opacity: 0.5; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
